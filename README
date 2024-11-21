@@ -1,0 +1,94 @@
+![](https://api.visitorbadge.io/api/VisitorHit?user=toby959&repo=challenge-foro-hub&countColor=%230e75b6)
+
+ <h1 aling="center"> API Challenge Foro-Hub </h1>
+
+___
+
+
+![Badge en Desarollo](https://img.shields.io/badge/STATUS-EN%20DESAROLLO-green)&nbsp;&nbsp;&nbsp;![Java 17](https://img.shields.io/badge/java-17-blue?logo=java)&nbsp;&nbsp;&nbsp;![Version](https://img.shields.io/badge/version-v1.0-COLOR.svg)&nbsp;&nbsp;&nbsp;[![MIT License](https://img.shields.io/badge/licencia-MIT-blue.svg)](LICENSE)
+___
+# Descripcion 📖
+
+## Relaciones
+* Relación entre **topics** y **users**:
+En la tabla topics, el campo user_id está definido como una clave foránea que hace referencia al campo id de la tabla users. Esto es correcto, ya que cada tema (Topic) tiene un autor (User). La relación es de muchos a uno (ManyToOne), lo que significa que un usuario puede tener múltiples temas, pero cada tema solo puede tener un autor.
+## Relación entre topics y courses
+* En la tabla **topics**, el campo **course_id** está definido como una clave foránea que hace referencia al campo id de la tabla courses. Esto también es correcto, ya que cada tema puede estar asociado a un curso (Course). La relación es nuevamente de muchos a uno, lo que significa que un curs* puede tener múltiples temas, pero cada tema solo puede pertenecer a un curso.
+
+## Conclusión
+Las relaciones entre las tablas están bien definidas y son coherentes con las entidades Java que has proporcionado. A continuación, se presenta un resumen de las relaciones:
+Un **usuario** `(User)` puede tener muchos **temas** `(Topic)`.
+Un **curso** `(Course)` puede tener muchos **temas** `(Topic)`.
+Cada **tema** `(Topic)` tiene exactamente un **autor** `(User)` y pertenece a exactamente un curso `(Course)`.
+
+___
+# Recursos:
+
+| Plugin                                   | URL                          |
+|------------------------------------------|------------------------------|
+| lombok                                   | https://start.spring.io/     |
+| spring-boot-starter-web                 | https://start.spring.io/     |
+| spring-boot-devtools                    | https://start.spring.io/     |
+| spring-boot-starter-data-jpa            | https://start.spring.io/     |
+| flyway migration                         | https://start.spring.io/     |
+| mysql driver                             | https://start.spring.io/     |
+| validation                               | https://start.spring.io/     |
+| spring security                          | https://start.spring.io/     |
+| springdoc-openapi-starter-webmvc-ui     | https://start.spring.io/     |
+
+# Herramientas utilizadas 🛠️
+___
+* 1 - IntelliJ IDEA Community Edition.
+* 2 - Java version 17.0.10.
+___
+# Ejecutar el Proyecto ⚙️
+1 - Clona el repositorio en tu máquina local
+``` bash
+git clone
+<https://github.com/toby959/challenge-foro-hub.git>
+```
+2 - Compila y ejecuta el archivo ForoHubApplication.java.
+___
+# Funcionalidades 📦
+
+___
+# Imagenes 📸
+
+![Imagen inicio](image1.png)
+
+![Imagen Vista Inicio](image_1.png)
+
+![Imagen Vista Lista Peliculas](image_2.png)
+
+![Imagen Vista Modificar](image_3.png)
+
+![Imagen DB H2](image_4.png)
+
+![Imagen DB H2 tabla](image_5.png)
+___
+
+# Colaboraciones 🎯
+Si deseas contribuir a este proyecto, por favor sigue estos pasos:
+
+1 - Haz un fork del repositorio: Crea una copia del repositorio en tu cuenta de GitHub.
+2 - Crea una nueva rama: Utiliza el siguiente comando para crear y cambiar a una nueva rama:
+```bash
+git chechout -b feature-nueva
+```
+3 - Realiza tus cambios: Implementa las mejoras o funcionalidades que deseas agregar.
+4 - Haz un commit de tus cambios: Guarda tus cambios con un mensaje descriptivo:
+```bash
+git commit -m 'Añadir nueva funcionalidad'
+```
+5 - Envía tus cambios: Sube tu rama al repositorio remoto:
+````bash
+git push origin feature-nueva
+````
+6 - Abre un pull request: Dirígete a la página del repositorio original y crea un pull request para que revisemos tus cambios.
+
+Gracias por tu interés en contribuir a este proyecto. ¡Esperamos tus aportes!
+___
+
+## Licencia 📜
+
+Este proyecto está licenciado bajo la Licencia MIT - ver el archivo [LICENSE](https://github.com/toby959/challenge-foro-hub/blob/main/LICENSE) para más detalles.
