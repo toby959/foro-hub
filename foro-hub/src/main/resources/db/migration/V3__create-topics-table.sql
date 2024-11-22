@@ -2,7 +2,7 @@ CREATE TABLE topics (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     title VARCHAR(100) NOT NULL,
     message VARCHAR(250) NOT NULL,
-    creationdate TIMESTAMP NOT NULL,
+    creation_date TIMESTAMP NOT NULL,
     status VARCHAR(20) NOT NULL,
     user_id BIGINT,
     course_id BIGINT,

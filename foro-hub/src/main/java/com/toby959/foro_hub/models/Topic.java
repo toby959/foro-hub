@@ -1,5 +1,6 @@
 package com.toby959.foro_hub.models;
 
+import com.toby959.foro_hub.dto.TopicDataUpdate;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -26,8 +27,8 @@ public class Topic {
     @Column(nullable = false, length = 250)
     private String message;
 
-    @Column(nullable = false)
-    private LocalDateTime creationdate;
+    @Column(nullable = false, name = "creation_date")
+    private LocalDateTime creationDate;
 
     @Column(nullable = false)
     private Status status;
@@ -45,9 +46,15 @@ public class Topic {
     public Topic(String title, String message, User author, Course course) {
         this.title = title;
         this.message = message;
-        this.creationdate = LocalDateTime.now();
+        this.creationDate = LocalDateTime.now();
         this.status = Status.ACTIVE;
         this.author = author;
         this.course = course;
+    }
+
+    public void update(TopicDataUpdate data) {
+        this.title = data.title();
+        this.message = data.message();
+        this.status = data.status();
     }
 }
