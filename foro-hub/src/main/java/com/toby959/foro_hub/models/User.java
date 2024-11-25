@@ -14,7 +14,10 @@ import java.util.List;
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id")
 @Entity
-@Table(name = "users")
+@Table(name = "users", uniqueConstraints = {
+        @UniqueConstraint(name = "ui_user_name", columnNames = {"name"}),
+        @UniqueConstraint(name = "ui_user_email", columnNames = {"email"})
+})
 public class User {
 
     @Id

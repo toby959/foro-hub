@@ -34,12 +34,17 @@ public class TopicController {
         URI url = uriComponentsBuilder.path("/topics/{id}").buildAndExpand(dataView.id()).toUri();
         return ResponseEntity.created(url).body(dataView);
     }
-//###############
+
+    //###############
+
     @GetMapping("/{id}")
     public ResponseEntity<TopicDataView> read(@PathVariable() Long id) {
         var dataView = new TopicDataView(topicService.read(id));
         return ResponseEntity.ok(dataView);
     }
+
+
+
 //###############
     @GetMapping
     public ResponseEntity<Page<TopicDataView>> findAll(@PageableDefault(size = 10) Pageable pageable) {
@@ -48,15 +53,16 @@ public class TopicController {
     }
 //###############
     @GetMapping("/top10")
-    public ResponseEntity<Page<TopicDataView>> findTop10New(@PageableDefault(size = 10) Pageable pageable) {
+    public ResponseEntity<Page<TopicDataView>> findTop10New(@PageableDefault(size = 2) Pageable pageable) {
         var dataList = topicService.findTop10New(Status.ACTIVE,pageable).map(TopicDataView::new);
         return ResponseEntity.ok(dataList);
     }
 //###############
 
-    @PutMapping
+    @PutMapping("/{id}")
     @Transactional
     public ResponseEntity<TopicDataView> update(
+            @PathVariable Long id,
             @RequestBody @Valid TopicDataUpdate dataUpdate,
             UriComponentsBuilder uriComponentsBuilder) {
         var dataView = new TopicDataView(topicService.update(dataUpdate));
@@ -66,7 +72,7 @@ public class TopicController {
 //###############
     @DeleteMapping("/{id}")
     @Transactional
-    public ResponseEntity<TopicDataView> delete(@PathVariable() Long id) {
+    public ResponseEntity<TopicDataView> delete(@PathVariable Long id) {
         topicService.delete(id);
         return ResponseEntity.noContent().build();
     }

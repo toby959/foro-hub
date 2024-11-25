@@ -4,6 +4,7 @@ import com.toby959.foro_hub.models.Status;
 import com.toby959.foro_hub.models.Topic;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 public record TopicDataView(
         Long id,
@@ -11,12 +12,14 @@ public record TopicDataView(
         String message,
         LocalDateTime creationDate,
         Status status,
-        Long author,
-        Long course
+        Long authorId,
+        Long courseId
 ) {
 
     public TopicDataView(Topic topic) {
+
         this(
+
                 topic.getId(),
                 topic.getTitle(),
                 topic.getMessage(),
@@ -27,3 +30,4 @@ public record TopicDataView(
         );
     }
 }
+

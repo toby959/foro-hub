@@ -47,12 +47,15 @@ public class TopicService {
         return topic;
     }
 //###################
-    public Topic read(Long id) {
-        if(!topicRepository.existsById(id)){
-            throw new TopicValidationException("id","No existe un tópico con el identificador " + id);
-        }
-        return topicRepository.getReferenceById(id);
+
+public Topic read(Long id){
+    if(!topicRepository.existsById(id)){
+        throw new TopicValidationException("id","No existe un tópico con el identificador " + id);
     }
+    return topicRepository.getReferenceById(id);
+}
+
+
 //###################
     public Page<Topic> findAll(Pageable pageable) {
         return topicRepository.findByOrderByCreationDateDesc(pageable);
@@ -62,31 +65,42 @@ public class TopicService {
         return topicRepository.findTop10ByStatusOrderByCreationDateDesc(status, pageable);
     }
 //###################
-    public Topic update(TopicDataUpdate data) {
-        if(!topicRepository.existsById(data.id())){
-            throw new TopicValidationException("topico","No existe un tópico con el identificador " + data.id());
-        }
-
-        var topic = topicRepository.getReferenceById(data.id());
-        var equalTitle = topic.getTitle().equals(data.title());
-        var equalMessage = topic.getMessage().equals(data.message());
-        var equalStatus = topic.getStatus() == data.status();
-
-        if (equalTitle && equalMessage && equalStatus) {
-            throw new TopicValidationException("topico","Los datos suministrados son iguales a los existentes");
-        }
-
-        if ((!equalTitle) || (!equalMessage)) {
-            if (topicRepository.existsByTitleAndMessageAndIdNot(data.title(), data.message(), data.id())) {
-                throw new TopicValidationException("topico", "Ya existe un tópico con igual título y mensaje");
-            }
-        }
-
-        topic.update(data);
-        topicRepository.save(topic);
-
-        return topic;
+public Topic update(TopicDataUpdate data) {
+    // Verifica si existe el tópico
+    var topicOptional = topicRepository.findById(data.id());
+    if (!topicOptional.isPresent()) {
+        throw new TopicValidationException("topico", "No existe un tópico con el identificador " + data.id());
     }
+
+    // Obtén el tópico
+    var topic = topicOptional.get();
+
+    // Accede a las propiedades sin problemas
+    String title = topic.getTitle();
+    String message = topic.getMessage();
+    Status status = topic.getStatus();
+
+    // Compara los valores
+    var equalTitle = title != null && title.equals(data.title());
+    var equalMessage = message != null && message.equals(data.message());
+    var equalStatus = status == data.status();
+
+    if (equalTitle && equalMessage && equalStatus) {
+        throw new TopicValidationException("topico", "Los datos suministrados son iguales a los existentes");
+    }
+
+    if (!equalTitle || !equalMessage) {
+        if (topicRepository.existsByTitleAndMessageAndIdNot(data.title(), data.message(), data.id())) {
+            throw new TopicValidationException("topico", "Ya existe un tópico con igual título y mensaje");
+        }
+    }
+
+    // Actualiza el tópico
+    topic.update(data);
+    topicRepository.save(topic);
+
+    return topic;
+}
 //###################
     public void delete(Long id) {
         if(!topicRepository.existsById(id)){

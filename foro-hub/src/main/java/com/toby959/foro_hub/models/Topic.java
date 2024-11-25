@@ -14,7 +14,8 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id")
 @Entity
-@Table(name = "topics")
+@Table(name = "topics",
+        uniqueConstraints = { @UniqueConstraint(name = "ui_topic_title_message", columnNames = {"title", "message"}) })
 public class Topic {
 
     @Id

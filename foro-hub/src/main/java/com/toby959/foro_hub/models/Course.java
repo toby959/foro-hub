@@ -14,7 +14,7 @@ import java.util.List;
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id")
 @Entity
-@Table(name = "courses")
+@Table(name = "courses",    uniqueConstraints = { @UniqueConstraint(name = "ui_course_name", columnNames = {"name"}) })
 public class Course {
 
     @Id
