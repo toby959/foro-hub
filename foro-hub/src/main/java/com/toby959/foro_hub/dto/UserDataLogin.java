@@ -12,4 +12,7 @@ public record UserDataLogin(
         @Size(min = 7, max = 250, message = "El password, debe tener entre 7 y 250 caracteres.")
         String password
 ) {
+        public UserDataLogin(UserDataLogin loginData) {
+                this(loginData.email(), loginData.password());
+        }
 }

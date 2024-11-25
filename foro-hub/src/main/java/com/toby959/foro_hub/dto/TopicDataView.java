@@ -12,7 +12,7 @@ public record TopicDataView(
         String message,
         LocalDateTime creationDate,
         Status status,
-        Long authorId,
+        Long userId,
         Long courseId
 ) {
 
@@ -25,9 +25,14 @@ public record TopicDataView(
                 topic.getMessage(),
                 topic.getCreationDate(),
                 topic.getStatus(),
-                topic.getAuthor().getId(),
+                topic.getUser().getId(),
                 topic.getCourse().getId()
         );
     }
+    // Constructor que acepta solo id y title
+    public TopicDataView(Long id, String title) {
+        this(id, title, null, null, null, null, null); // Inicializa otros campos como null
+    }
+
 }
 

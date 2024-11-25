@@ -36,7 +36,7 @@ public class Topic {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
-    private User author;
+    private User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "course_id")
@@ -44,12 +44,12 @@ public class Topic {
 
 
 
-    public Topic(String title, String message, User author, Course course) {
+    public Topic(String title, String message, User user, Course course) {
         this.title = title;
         this.message = message;
         this.creationDate = LocalDateTime.now();
         this.status = Status.ACTIVE;
-        this.author = author;
+        this.user = user;
         this.course = course;
     }
 

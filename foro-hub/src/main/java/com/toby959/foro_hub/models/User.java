@@ -35,7 +35,7 @@ public class User {
     @Column(nullable = false, length = 250)
     private String password;
 
-    @OneToMany(mappedBy = "author", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<Topic> topics = new ArrayList<>();
 
     public User(String name, String email, String password) {

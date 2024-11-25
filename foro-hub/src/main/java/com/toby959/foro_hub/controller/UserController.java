@@ -1,10 +1,8 @@
 package com.toby959.foro_hub.controller;
 
-import com.toby959.foro_hub.dto.UserDataCreate;
-import com.toby959.foro_hub.dto.UserDataLogin;
-import com.toby959.foro_hub.dto.UserDataUpdate;
-import com.toby959.foro_hub.dto.UserDataView;
+import com.toby959.foro_hub.dto.*;
 import com.toby959.foro_hub.error.UserValidationException;
+import com.toby959.foro_hub.models.Topic;
 import com.toby959.foro_hub.models.User;
 import com.toby959.foro_hub.repository.IUserRepository;
 import com.toby959.foro_hub.service.UserService;
@@ -19,6 +17,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/users")
@@ -29,18 +30,38 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping("/login")
-    public ResponseEntity<User> login(@RequestBody UserDataLogin loginData) {
+    public ResponseEntity<UserResponseDTO> login(@RequestBody UserDataLogin loginData) {
+        // Imprimir los datos de inicio de sesión recibidos
+        System.out.println("Datos de inicio de sesión recibidos: " + loginData);
+
         // Verificar si el usuario existe
         User existingUser = userService.findByEmail(loginData.email())
                 .orElseThrow(() -> new UserValidationException("email", "Usuario no encontrado"));
 
-        // Validar la contraseña (aquí deberías usar un método para comparar contraseñas encriptadas)
+        // Cargar temas del usuario si es necesario
+        List<Topic> topics = existingUser.getTopics(); // Esto puede ser lazy loading
+        if (topics == null) {
+            topics = new ArrayList<>(); // Asegúrate de que no sea null
+        }
+        System.out.println("Número de temas asociados: " + topics.size());
+
+        // Imprimir el usuario existente (sin mostrar la contraseña)
+        System.out.println("Usuario encontrado: " + existingUser.getEmail());
+
+        // Validar la contraseña
         if (!existingUser.getPassword().equals(loginData.password())) {
             throw new UserValidationException("password", "Contraseña incorrecta");
         }
 
-        // Aquí puedes generar un token JWT o devolver el usuario
-        return ResponseEntity.ok(existingUser);
+        // Crear lista de TopicDataViews a partir de los temas del usuario
+        List<TopicDataView> topicDataViews = topics.stream()
+                .map(topic -> new TopicDataView(topic.getId(), topic.getTitle()))
+                .collect(Collectors.toList());
+
+        // Crear el objeto UserResponseDTO con la información del usuario y sus temas
+        UserResponseDTO userResponse = new UserResponseDTO(existingUser.getId(), existingUser.getEmail(), existingUser.getName(), topicDataViews);
+
+        return ResponseEntity.ok(userResponse);
     }
 //"""""""""""""""""""
 

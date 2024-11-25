@@ -26,8 +26,8 @@ public class TopicService {
     private final IUserRepository userRepository;
 
     public Topic create(TopicDataCreate data) {
-        if(!userRepository.existsById(data.author())){
-            throw new TopicValidationException("autor","No existe un usuario con el identificador " + data.author());
+        if(!userRepository.existsById(data.user())){
+            throw new TopicValidationException("autor","No existe un usuario con el identificador " + data.user());
         }
 
         if(!courseRepository.existsById(data.course())){
@@ -38,7 +38,7 @@ public class TopicService {
             throw new TopicValidationException("topico","Ya existe un tópico con igual título y mensaje");
         }
 
-        var user = userRepository.getReferenceById(data.author());
+        var user = userRepository.getReferenceById(data.user());
         var course = courseRepository.getReferenceById(data.course());
         var topic = new Topic(data.title(), data.message(), user, course);
 

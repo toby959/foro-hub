@@ -15,7 +15,7 @@ public record TopicDataCreate(
         String message,
 
         @NotNull
-        Long author,
+        Long user,
 
         @NotNull
         Long course
